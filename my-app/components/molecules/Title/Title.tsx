@@ -8,6 +8,7 @@ interface TitleProps {
 
 function Title({ number, h1, h2 }: TitleProps) {
   return (
+    <>
     <div className="flex flex-col gap-6">
       <div
         className="w-16 h-16 flex justify-center items-center"
@@ -37,6 +38,25 @@ function Title({ number, h1, h2 }: TitleProps) {
         </div>
       </div>
     </div>
+    <div className="flex flex-col mt-6">
+      <div
+            className="h-3 mx-6 bg-[#17151E]"
+            style={{
+              borderRadius:
+                "var(--Corner-radius-10px, 10px) var(--Corner-radius-10px, 10px) 0 0",
+            }}
+          ></div>
+          <div
+            className="h-3 mx-3"
+            style={{
+              borderRadius:
+                "var(--Corner-radius-10px, 10px) var(--Corner-radius-10px, 10px) 0 0",
+              background:
+                "var(--transparent-surface-transparent-white-10, rgba(255, 255, 255, 0.10))",
+            }}
+          ></div>
+    </div>
+    </>
   );
 }
 

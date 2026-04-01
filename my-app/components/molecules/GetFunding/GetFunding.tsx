@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import grid from "../../public/Grid.svg";
+import React, { useEffect, useState, useRef } from "react";
+import grid from "../../../public/Grid.svg";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 
@@ -9,6 +9,7 @@ const boxHeight = 89;
 
 function GetFunding() {
   const [popupText, setPopupText] = useState("SO 27001");
+  const isMountedRef = useRef(false);
   
   const controls = useAnimation();
   const popupOffsetControls = useAnimation(); // New controller for the pop-up's internal shift
@@ -20,6 +21,12 @@ function GetFunding() {
   const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
   useEffect(() => {
+    isMountedRef.current = true;
+  }, []);
+
+  useEffect(() => {
+    if (!isMountedRef.current) return;
+
     const sequence = async () => {
       while (true) {
         // --- STAGE 1: MOVE LEFT ---
@@ -86,7 +93,7 @@ function GetFunding() {
     };
 
     sequence();
-  }, [controls, popupOffsetControls, lineControlsRight, lineControlsLeft, lineControlsTop, lineControlsBottom]);
+  }, []);
 
   const lineColor = "#F94302";
 

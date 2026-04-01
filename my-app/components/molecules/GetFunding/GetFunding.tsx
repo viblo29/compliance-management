@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import grid from "../../../public/Grid.svg";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
+import GreenDot from "@/components/atoms/GreenDot/GreenDot";
 
 const boxWidth = 99;
 const boxHeight = 89;
@@ -128,7 +129,7 @@ function GetFunding() {
               <div className="font-medium leading-6 tracking-[0.1px]" style={{color: "var(--transparent-surface-transparent-white-60, rgba(255, 255, 255, 0.60))"}}>Framework</div>
             </div>
             <div className="flex flex-row items-center justify-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-[#3EBE00]"></div>
+              <GreenDot/>
               <div style={{letterSpacing:"var(--ui-14-semi-medium-letter-spacing-0, 0)"}}>Compliant</div>
             </div>
           </div>

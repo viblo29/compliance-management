@@ -1,6 +1,8 @@
 import React from "react";
 import GetFunding from "../molecules/GetFunding/GetFunding";
 import Title from "../molecules/Title/Title";
+import Radar from "../molecules/Radar/Radar";
+import GreenDot from "../atoms/GreenDot/GreenDot";
 
 function Home() {
   return (
@@ -48,11 +50,28 @@ function Home() {
           h1="Gap Monitoring"
           h2="Continuously detect control gaps and track remediation before audits begin."
         />
-          <div className="h-100.5 flex relative items-center justify-center" style={{
+          <div className="h-100.5 flex flex-col relative items-center justify-center p-6 gap-[18px]" style={{
                 borderRadius: 'var(--Corner-radius-10px, 10px)',
                 border: '1px var(--Stroke-Gradient-2, #FFF)',
                 background: 'var(--Widget-Gradient, linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%))'
               }}>
+            <Radar/>
+            <div className="flex flex-row gap-0.5 font-medium leading-6 tracking-[0.1px]">
+              <div className='w-[198.6px] h-13 flex items-center justify-start gap-3 px-5' style={{
+                borderRadius: "var(--Corner-radius-8px, 8px) 0 0 var(--Corner-radius-8px, 8px)",
+                background: "var(--transparent-surface-transparent-white-6, rgba(255, 255, 255, 0.06))"
+              }}>
+                <GreenDot/>
+                24 healthy
+              </div>
+              <div className='w-[198.6px] h-13 flex items-center justify-start gap-3 px-5' style={{
+                borderRadius: "0 var(--Corner-radius-8px, 8px) var(--Corner-radius-8px, 8px) 0",
+                background: "var(--transparent-surface-transparent-white-6, rgba(255, 255, 255, 0.06))"
+              }}>
+                <GreenDot/>
+                8 in progress
+              </div>
+            </div>
           </div>
       </div>
     </div>

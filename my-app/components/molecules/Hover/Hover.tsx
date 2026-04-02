@@ -67,20 +67,9 @@ export default function MonitoringGrid() {
       }}
     >
       <div style={{ position: "relative" }}>
-        {/* Stacked cards */}
-        <div style={{ position: "absolute", top: -10, left: 6, right: -6, bottom: 10, background: "#16161A", borderRadius: 18, border: "1px solid rgba(255,255,255,0.03)" }} />
-        <div style={{ position: "absolute", top: -5, left: 3, right: -3, bottom: 5, background: "#1A1A1E", borderRadius: 18, border: "1px solid rgba(255,255,255,0.04)" }} />
 
         {/* Main card */}
-        <div
-          style={{
-            position: "relative",
-            background: "#1E1E22",
-            borderRadius: 16,
-            padding: 20,
-            border: "1px solid rgba(255,255,255,0.06)",
-          }}
-        >
+        <div>
           {/* Grid container */}
           <div
             style={{

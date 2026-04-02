@@ -23,6 +23,20 @@ function Home3() {
                 <Vendor/>
             </div>
         </div>
+        <div className="w-[479.33] p-4 flex flex-col">
+          <Title
+            number={8}
+            h1="Vendor Assessments"
+            h2="Evaluate vendor security posture through structured questionnaires and document reviews."
+          />
+            <div className="h-100.5 flex relative items-start justify-center p-10" style={{
+                  borderRadius: 'var(--Corner-radius-10px, 10px)',
+                  border: '1px var(--Stroke-Gradient-2, #FFF)',
+                  background: 'var(--Widget-Gradient, linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%))'
+                }}>
+
+            </div>
+        </div>
         </div>
     </div>
   )

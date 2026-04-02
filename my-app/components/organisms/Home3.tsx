@@ -24,6 +24,10 @@ function Home3() {
                 <Vendor/>
             </div>
         </div>
+
+                        <div className="w-px h-164.5" style={{background: "var(--transparent-surface-transparent-white-15, rgba(255, 255, 255, 0.16))"}}></div>
+
+
         <div className="w-[479.33] p-4 flex flex-col">
           <Title
             number={8}
@@ -38,6 +42,9 @@ function Home3() {
 
             </div>
         </div>
+                
+                        <div className="w-px h-164.5" style={{background: "var(--transparent-surface-transparent-white-15, rgba(255, 255, 255, 0.16))"}}></div>
+
         <div className="w-[479.33] p-4 flex flex-col">
           <Title
             number={8}

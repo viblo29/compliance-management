@@ -2,7 +2,8 @@ import React from "react";
 import GetFunding from "../molecules/GetFunding/GetFunding";
 import Title from "../molecules/Title/Title";
 import Radar from "../molecules/Radar/Radar";
-import GreenDot from "../atoms/GreenDot/GreenDot";
+import GreenDot from "../atoms/Dot/Dot";
+import Dot from "../atoms/Dot/Dot";
 
 function Home() {
   return (
@@ -60,14 +61,14 @@ function Home() {
                   borderRadius: "var(--Corner-radius-8px, 8px) 0 0 var(--Corner-radius-8px, 8px)",
                   background: "var(--transparent-surface-transparent-white-6, rgba(255, 255, 255, 0.06))"
                 }}>
-                  <GreenDot/>
+                  <Dot color="green"/>
                   24 healthy
                 </div>
                 <div className='w-[198.6px] h-13 flex items-center justify-start gap-3 px-5' style={{
                   borderRadius: "0 var(--Corner-radius-8px, 8px) var(--Corner-radius-8px, 8px) 0",
                   background: "var(--transparent-surface-transparent-white-6, rgba(255, 255, 255, 0.06))"
                 }}>
-                  <GreenDot/>
+                  <Dot color="green"/>
                   8 in progress
                 </div>
               </div>

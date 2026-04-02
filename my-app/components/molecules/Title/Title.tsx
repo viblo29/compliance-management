@@ -32,8 +32,8 @@ function Title({ number, h1, h2 }: TitleProps) {
       </div>
 
       <div className="flex flex-col gap-3">
-        <div className="text-xl font-semibold leading-7 ">{h1}</div>
-        <div className="text-lg leading-6" style={{color: "var(--transparent-surface-transparent-white-60, rgba(255, 255, 255, 0.60))"}}>
+        <div className="text-xl font-semibold leading-7">{h1}</div>
+        <div className="text-lg leading-6 pr-5" style={{color: "var(--transparent-surface-transparent-white-60, rgba(255, 255, 255, 0.60))"}}>
           {h2}
         </div>
       </div>

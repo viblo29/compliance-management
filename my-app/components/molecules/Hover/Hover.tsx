@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 // --- Configuration Constants ---
 const ROWS = 4;
 const COLS = 4;
-const GAP = 8;
+const GAP = 4;
 const CELL_W = 96.833;
 const CELL_H = 85.5;
 
@@ -80,7 +80,6 @@ export default function MonitoringGrid() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "120px",
       }}
     >
       <div style={{ position: "relative" }}>

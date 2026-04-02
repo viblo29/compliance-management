@@ -1,6 +1,7 @@
 import React from 'react'
 import Title from '../molecules/Title/Title'
 import Vendor from '../molecules/Vendor/Vendor'
+import VendorRisk from '../molecules/VendorRisk/VendorRisk'
 
 function Home3() {
   return (
@@ -35,6 +36,20 @@ function Home3() {
                   background: 'var(--Widget-Gradient, linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%))'
                 }}>
 
+            </div>
+        </div>
+        <div className="w-[479.33] p-4 flex flex-col">
+          <Title
+            number={8}
+            h1="Vendor Assessments"
+            h2="Evaluate vendor security posture through structured questionnaires and document reviews."
+          />
+            <div className="h-100.5 flex relative items-start justify-center p-6" style={{
+                  borderRadius: 'var(--Corner-radius-10px, 10px)',
+                  border: '1px var(--Stroke-Gradient-2, #FFF)',
+                  background: 'var(--Widget-Gradient, linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%))'
+                }}>
+                <VendorRisk/>
             </div>
         </div>
         </div>

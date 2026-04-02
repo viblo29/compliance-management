@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import grid from "../../../public/Grid.svg";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
-import GreenDot from "@/components/atoms/GreenDot/GreenDot";
+import GreenDot from "@/components/atoms/Dot/Dot";
 
 const boxWidth = 99;
 const boxHeight = 89;

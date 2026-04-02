@@ -129,7 +129,7 @@ function GetFunding() {
               <div className="font-medium leading-6 tracking-[0.1px]" style={{color: "var(--transparent-surface-transparent-white-60, rgba(255, 255, 255, 0.60))"}}>Framework</div>
             </div>
             <div className="flex flex-row items-center justify-center gap-3">
-              <GreenDot/>
+              <GreenDot color="green"/>
               <div style={{letterSpacing:"var(--ui-14-semi-medium-letter-spacing-0, 0)"}}>Compliant</div>
             </div>
           </div>

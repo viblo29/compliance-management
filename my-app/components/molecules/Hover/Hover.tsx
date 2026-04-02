@@ -2,10 +2,27 @@
 
 import { useState, useEffect } from "react";
 
+// --- Configuration Constants ---
 const ROWS = 4;
 const COLS = 4;
+const GAP = 8;
+const CELL_W = 96.833;
+const CELL_H = 85.5;
 
-// Eye icon for gray tiles (smaller, 0.2 opacity)
+// Cursor Dimensions (based on your SVG scale)
+const CURSOR_W = 20.308;
+const CURSOR_H = 24;
+
+// Animation Settings
+const BEZIER = "cubic-bezier(0.42, 0, 0.58, 1)";
+const DURATION = "200ms"; 
+const DELAY_BETWEEN_MOVES = 1000; 
+
+const PATH = [
+  [1,1],[1,2],[2,2],[2,1],
+];
+
+// --- Icons ---
 function EyeIconGray() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="27" height="22" viewBox="0 0 27 22" fill="none">
@@ -14,48 +31,48 @@ function EyeIconGray() {
   );
 }
 
-// Eye icon for orange tile (white, larger)
 function EyeIconWhite() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" style={{ width: 32, height: 32, flexShrink: 0 }}>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
       <path fillRule="evenodd" clipRule="evenodd" d="M3.03028 14.3185C4.18938 11.7155 7.85888 5.33203 16.0039 5.33203C24.1491 5.33203 27.8183 11.7158 28.9772 14.3188C29.4549 15.3918 29.4549 16.6056 28.9772 17.6786C27.8183 20.2816 24.1491 26.6654 16.0039 26.6654C7.85888 26.6654 4.18938 20.2819 3.03028 17.6789C2.55241 16.6057 2.55241 15.3917 3.03028 14.3185ZM16.0035 21.332C18.949 21.332 21.3368 18.9442 21.3368 15.9987C21.3368 13.0532 18.949 10.6654 16.0035 10.6654C13.058 10.6654 10.6702 13.0532 10.6702 15.9987C10.6702 18.9442 13.058 21.332 16.0035 21.332Z" fill="white"/>
       <path d="M14.0035 15.9987C15.1081 15.9987 16.0035 15.1033 16.0035 13.9987C16.0035 13.7658 15.9637 13.5422 15.8905 13.3344C15.928 13.3328 15.9657 13.332 16.0035 13.332C17.4763 13.332 18.6702 14.5259 18.6702 15.9987C18.6702 17.4715 17.4763 18.6654 16.0035 18.6654C14.5307 18.6654 13.3368 17.4715 13.3368 15.9987C13.3368 15.9609 13.3376 15.9232 13.3392 15.8857C13.547 15.9589 13.7706 15.9987 14.0035 15.9987Z" fill="white"/>
     </svg>
   );
 }
 
-// Cursor icon
 function CursorIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="23" viewBox="0 0 21 23" fill="none" style={{ width: 20.308, height: 24 }}>
+    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="23" viewBox="0 0 21 23" fill="none">
       <path d="M1.05859 4.57617C0.570853 2.03849 3.3064 0.112127 5.53125 1.42676L17.9463 8.76367C20.2292 10.1127 19.7682 13.5435 17.21 14.2412L12.3955 15.5537C12.1467 15.6216 11.9334 15.7828 11.8008 16.0039L9.36719 20.0605C7.95075 22.4211 4.36852 21.7864 3.84863 19.083L1.05859 4.57617Z" fill="#FF4E02" stroke="white" strokeWidth="2" strokeLinecap="square"/>
     </svg>
   );
 }
 
-// Path the orange tile follows — only the 4 centre cells
-const PATH = [
-  [1,1],[1,2],[2,2],[2,1],
-];
-
+// --- Main Component ---
 export default function MonitoringGrid() {
   const [activeIdx, setActiveIdx] = useState(0);
-  const GAP = 8;
-  const CELL_W = 96.833;
-  const CELL_H = 85.5;
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIdx((prev) => (prev + 1) % PATH.length);
-    }, 1200);
+    }, DELAY_BETWEEN_MOVES);
     return () => clearInterval(interval);
   }, []);
 
   const [activeRow, activeCol] = PATH[activeIdx];
 
-  // Calculate orange tile position
-  const orangeLeft = activeCol * (CELL_W + GAP) - 20;
-  const orangeTop = activeRow * (CELL_H + GAP) - 20;
+  // 1. Grid base coordinates
+  const gridBaseLeft = activeCol * (CELL_W + GAP);
+  const gridBaseTop = activeRow * (CELL_H + GAP);
+
+  // 2. Orange card offset (-20, -20)
+  const orangeLeft = gridBaseLeft - 20;
+  const orangeTop = gridBaseTop - 20;
+
+  // 3. Cursor Locked Corner Position
+  // Right side out by 5.81px, Bottom out by 8.5px
+  const cursorLeft = gridBaseLeft + CELL_W - (CURSOR_W - 5.81);
+  const cursorTop = gridBaseTop + CELL_H - (CURSOR_H - 8.5);
 
   return (
     <div
@@ -63,105 +80,94 @@ export default function MonitoringGrid() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontFamily: "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        padding: "120px",
       }}
     >
       <div style={{ position: "relative" }}>
-
-        {/* Main card */}
-        <div>
-          {/* Grid container */}
-          <div
-            style={{
-              position: "relative",
-              display: "grid",
-              gridTemplateColumns: `repeat(${COLS}, ${CELL_W}px)`,
-              gridTemplateRows: `repeat(${ROWS}, ${CELL_H}px)`,
-              gap: GAP,
-            }}
-          >
-            {/* Gray tiles — hide the one under the orange tile */}
-            {Array.from({ length: ROWS * COLS }, (_, i) => {
-              const row = Math.floor(i / COLS);
-              const col = i % COLS;
-              const isActive = row === activeRow && col === activeCol;
-              return (
-                <div
-                  key={`${row}-${col}`}
-                  style={{
-                    display: "flex",
-                    height: CELL_H,
-                    minWidth: 80,
-                    padding: 4,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 4,
-                    alignSelf: "stretch",
-                    borderRadius: 6,
-                    background: isActive
-                      ? "transparent"
-                      : "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%)",
-                    transition: "background 0.15s ease",
-                  }}
-                >
-                  {!isActive && <EyeIconGray />}
-                </div>
-              );
-            })}
-
-            {/* Orange active tile — absolutely positioned */}
-            <div
-              style={{
-                position: "absolute",
-                left: orangeLeft,
-                top: orangeTop,
-                display: "flex",
-                width: CELL_W,
-                height: CELL_H,
-                minWidth: 80,
-                padding: 4,
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 4,
-                borderRadius: 8,
-                background: "#FF4E02",
-                boxShadow: "0 0 50px 0 rgba(249, 67, 2, 0.25)",
-                transition: "left 0.45s cubic-bezier(0.4, 0, 0.2, 1), top 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
-                zIndex: 10,
-              }}
-            >
+        {/* Grid container */}
+        <div
+          style={{
+            position: "relative",
+            display: "grid",
+            gridTemplateColumns: `repeat(${COLS}, ${CELL_W}px)`,
+            gridTemplateRows: `repeat(${ROWS}, ${CELL_H}px)`,
+            gap: GAP,
+          }}
+        >
+          {Array.from({ length: ROWS * COLS }, (_, i) => {
+            const row = Math.floor(i / COLS);
+            const col = i % COLS;
+            const isActiveUnderneath = row === activeRow && col === activeCol;
+            
+            return (
               <div
+                key={`${row}-${col}`}
                 style={{
                   display: "flex",
-                  width: 32,
-                  height: 32,
-                  padding: 0,
+                  height: CELL_H,
+                  borderRadius: 6,
                   justifyContent: "center",
                   alignItems: "center",
-                  gap: 13.333,
-                  flexShrink: 0,
+                  background: isActiveUnderneath
+                    ? "transparent"
+                    : "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%)",
+                  transition: `background ${DURATION} ${BEZIER}`,
                 }}
               >
-                <EyeIconWhite />
+                {!isActiveUnderneath && <EyeIconGray />}
               </div>
-            </div>
+            );
+          })}
 
-            {/* Cursor — follows orange tile, offset to bottom-right */}
-            <div
-              style={{
-                position: "absolute",
-                left: orangeLeft + CELL_W + 6,
-                top: orangeTop + CELL_H + 8,
-                transition: "left 0.45s cubic-bezier(0.4, 0, 0.2, 1), top 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
-                zIndex: 11,
-                pointerEvents: "none",
-              }}
-            >
-              <CursorIcon />
-            </div>
+          {/* Orange active tile */}
+          <div
+            style={{
+              position: "absolute",
+              left: orangeLeft,
+              top: orangeTop,
+              display: "flex",
+              width: CELL_W,
+              height: CELL_H,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 8,
+              background: "#FF4E02",
+              boxShadow: "0 20px 50px -12px rgba(249, 67, 2, 0.6)",
+              transition: `left ${DURATION} ${BEZIER}, top ${DURATION} ${BEZIER}`,
+              zIndex: 10,
+              // animation: "flicker 4s infinite step-end"
+            }}
+          >
+            <EyeIconWhite />
+          </div>
+
+          {/* Cursor pinned to original bottom-right with specified overhang */}
+          <div
+            style={{
+              position: "absolute",
+              left: cursorLeft,
+              top: cursorTop,
+              width: CURSOR_W,
+              height: CURSOR_H,
+              transition: `left ${DURATION} ${BEZIER}, top ${DURATION} ${BEZIER}`,
+              zIndex: 11,
+              pointerEvents: "none",
+            }}
+          >
+            <CursorIcon />
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes flicker {
+          0%, 100% { opacity: 1; }
+          38% { opacity: 0.95; }
+          40% { opacity: 1; }
+          42% { opacity: 0.88; }
+          44% { opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 }

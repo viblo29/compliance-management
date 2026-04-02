@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react";
+import React from "react";
 
 // Monitor icon (laptop) - 20x20
 function MonitorIcon() {
@@ -33,15 +33,6 @@ const ITEMS = [
 ];
 
 export default function Inventory() {
-  const [activeIdx, setActiveIdx] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIdx((prev) => (prev + 1) % ITEMS.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div
       style={{
@@ -54,11 +45,6 @@ export default function Inventory() {
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-
-        @keyframes pillPulse {
-          0%, 100% { transform: scaleX(1); opacity: 1; }
-          50% { transform: scaleX(1.3); opacity: 0.7; }
-        }
       `}</style>
 
       {/* 1. TOP SECTION: Bordered container for only the 3 items */}
@@ -74,7 +60,8 @@ export default function Inventory() {
         }}
       >
         {ITEMS.map((item, i) => {
-          const isActive = i === activeIdx;
+          // Only the first component (index 0) gets the blue background and full opacity
+          const isActive = i === 0;
           return (
             <div
               key={i}
@@ -88,7 +75,6 @@ export default function Inventory() {
                 borderBottom: i === ITEMS.length - 1 ? "none" : "1px solid #38363E",
                 boxSizing: "border-box",
                 background: isActive ? "rgba(255,255,255,0.03)" : "transparent",
-                transition: "background 0.5s ease",
               }}
             >
               {/* Icon circle */}
@@ -102,8 +88,6 @@ export default function Inventory() {
                   borderRadius: 999,
                   background: isActive ? "#2D45FD" : "rgba(255,255,255,0.06)",
                   flexShrink: 0,
-                  transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-                  transform: isActive ? "scale(1.08)" : "scale(1)",
                 }}
               >
                 {item.icon === "layers" ? <LayersIcon /> : <MonitorIcon />}
@@ -115,14 +99,25 @@ export default function Inventory() {
                   flex: 1,
                   display: "flex",
                   flexDirection: "column",
-                  transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-                  transform: isActive ? "translateX(4px)" : "translateX(0)",
                 }}
               >
-                <span style={{ color: "#FFF", fontSize: 16, fontWeight: 500, opacity: isActive ? 1 : 0.8 }}>
+                <span 
+                  style={{ 
+                    color: "#FFF", 
+                    fontSize: 16, 
+                    fontWeight: 500, 
+                    opacity: isActive ? 1 : 0.8 
+                  }}
+                >
                   {item.title}
                 </span>
-                <span style={{ color: "rgba(255,255,255,0.60)", fontSize: 14, fontWeight: 400 }}>
+                <span 
+                  style={{ 
+                    color: "rgba(255,255,255,0.60)", 
+                    fontSize: 14, 
+                    fontWeight: 400 
+                  }}
+                >
                   {item.status}
                 </span>
               </div>
@@ -135,7 +130,6 @@ export default function Inventory() {
                   borderRadius: 99,
                   background: item.color,
                   flexShrink: 0,
-                  animation: isActive ? "pillPulse 1.5s ease-in-out infinite" : "none",
                 }}
               />
             </div>
@@ -143,10 +137,10 @@ export default function Inventory() {
         })}
       </div>
 
-      {/* 2. MIDDLE SECTION: Exact 84px Gap (Outside border) */}
+      {/* 2. MIDDLE SECTION: Exact 84px Gap */}
       <div style={{ height: 84 }} />
 
-      {/* 3. BOTTOM SECTION: Buttons (Outside border) */}
+      {/* 3. BOTTOM SECTION: Buttons */}
       <div 
           style={{ 
               display: "flex", 
